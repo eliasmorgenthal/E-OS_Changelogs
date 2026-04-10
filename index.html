@@ -15,9 +15,16 @@ body{
 }
 
 .wrapper{
-  max-width:800px;
+  max-width:1000px;
   margin:auto;
   padding:40px 20px;
+  display:flex;
+  gap:20px;
+}
+
+/* LEFT SIDE */
+.content{
+  flex:2;
 }
 
 h1{
@@ -46,6 +53,30 @@ footer{
   opacity:0.7;
   font-size:12px;
 }
+
+/* RIGHT SIDE */
+.side-panel{
+  width:220px;
+  background:rgba(0,0,0,0.4);
+  padding:15px;
+  border-radius:12px;
+}
+
+.side-panel button{
+  width:100%;
+  margin-bottom:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.game-area{
+  margin-top:15px;
+  background:rgba(0,0,0,0.3);
+  padding:15px;
+  border-radius:12px;
+}
 </style>
 </head>
 
@@ -53,23 +84,65 @@ footer{
 
 <div class="wrapper">
 
-<h1>E-OS</h1>
-<p id="changelogTitle">Change Logs</p>
+  <!-- LEFT SIDE -->
+  <div class="content">
+    <h1>E-OS</h1>
+    <p id="changelogTitle">Change Logs</p>
 
-<div class="version-box">
-<h2>0.0.4e</h2>
-<ul>
-<li>New Start-up screen</li>
-<li>Better Layouts</li>
-<li>Integrated Google</li>
-</ul>
+    <div class="version-box">
+      <h2>0.0.4e</h2>
+      <ul>
+        <li>New Start-up screen</li>
+        <li>Better Layouts</li>
+        <li>Integrated Google</li>
+      </ul>
+    </div>
+
+    <footer>
+      © 2026, E-OS Development Team.
+    </footer>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="side-panel">
+    <h3>Mini Games</h3>
+    <button onclick="loadGame('cookie')">Cookie Clicker</button>
+    <button onclick="loadGame('minesweeper')">Minesweeper</button>
+
+    <div id="gameArea" class="game-area">
+      <p>Select a game to start</p>
+    </div>
+  </div>
+
 </div>
 
-<footer>
-© 2026, E-OS Development Team.
-</footer>
+<script>
+function loadGame(game){
+  const area = document.getElementById("gameArea");
 
-</div>
+  if(game === "cookie"){
+    area.innerHTML = `
+      <h2>Cookie Clicker</h2>
+      <p>Cookies: <span id="cookies">0</span></p>
+      <button onclick="addCookie()">Click me 🍪</button>
+    `;
+  }
+
+  if(game === "minesweeper"){
+    area.innerHTML = `
+      <h2>Minesweeper</h2>
+      <p>(Coming soon 👀)</p>
+    `;
+  }
+}
+
+let cookies = 0;
+
+function addCookie(){
+  cookies++;
+  document.getElementById("cookies").innerText = cookies;
+}
+</script>
 
 </body>
 </html>
