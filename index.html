@@ -61,7 +61,8 @@ button{
 </div>
 
 <script>
-// Language
+
+// Language detection (safe fallback)
 const params = new URLSearchParams(window.location.search);
 const language = params.get("lan") === "de" ? "de" : "en";
 
@@ -72,33 +73,31 @@ function goBack(){
   window.location.href = url;
 }
 
-// Safe UI translation (prevents crashes)
+// UI translation (safe, no crashes)
 function applyLanguageUI(){
 
   document.documentElement.lang = language;
 
-  const title = document.getElementById("title");
-  const backBtn = document.getElementById("backBtn");
+  document.getElementById("title").textContent =
+    language === "de" ? "Änderungsprotokolle" : "Change Logs";
 
-  if(title){
-    title.textContent =
-      language === "de" ? "Änderungsprotokolle" : "Change Logs";
-  }
-
-  if(backBtn){
-    backBtn.textContent =
-      language === "de" ? "⬅ Zurück" : "⬅ Back";
-  }
+  document.getElementById("backBtn").textContent =
+    language === "de" ? "⬅ Zurück" : "⬅ Back";
 }
 
-// Load changelogs from JSON
+// Load JSON changelogs (CACHE FIXED + SORTED)
 async function loadChangelogs(){
 
   try{
-    const res = await fetch("changelog.json");
+    const res = await fetch("changelog.json?v=" + Date.now());
     const changelogs = await res.json();
 
     const container = document.getElementById("changelog");
+
+    // newest first sorting
+    changelogs.sort((a, b) =>
+      b.version.localeCompare(a.version, undefined, { numeric: true })
+    );
 
     container.innerHTML = changelogs.map(entry => `
       <div class="version-box">
@@ -114,13 +113,14 @@ async function loadChangelogs(){
     applyLanguageUI();
 
   } catch (err){
+    console.error(err);
     document.getElementById("changelog").innerHTML =
       "<p>Failed to load changelogs.</p>";
-    console.error(err);
   }
 }
 
 loadChangelogs();
+
 </script>
 
 </body>
