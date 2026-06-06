@@ -13,7 +13,6 @@ body{
   background:linear-gradient(135deg,#8fd3ff,#2d5bff,#5b1aa8);
   min-height:100vh;
 
-  /* Disable text selection */
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -23,8 +22,6 @@ body{
   max-width:1000px;
   margin:auto;
   padding:40px 20px;
-  display:flex;
-  gap:20px;
 }
 
 .content{ flex:2; }
@@ -38,27 +35,12 @@ h1{ font-size:40px; }
   margin-bottom:20px;
 }
 
-.side-panel{
-  width:220px;
-  background:rgba(0,0,0,0.4);
-  padding:15px;
-  border-radius:12px;
-}
-
-.side-panel button{
-  width:100%;
-  margin-bottom:10px;
-  padding:10px;
+button{
+  padding:10px 15px;
   border:none;
   border-radius:8px;
   cursor:pointer;
-}
-
-.game-area{
-  margin-top:15px;
-  background:rgba(0,0,0,0.3);
-  padding:15px;
-  border-radius:12px;
+  margin-bottom:15px;
 }
 
 footer{
@@ -70,6 +52,9 @@ footer{
 <body>
 
 <div class="wrapper">
+
+<!-- Back button -->
+<button onclick="goBack()">⬅ Back</button>
 
 <div class="content">
 <h1>E-OS</h1>
@@ -113,54 +98,9 @@ footer{
 <footer>© 2026, E-OS Development Team.</footer>
 </div>
 
-<div class="side-panel">
-<h3>Mini Games</h3>
-
-<!-- Back button -->
-<button onclick="goBack()">⬅ Back</button>
-
-<button onclick="loadGame('cookie')">Cookie Clicker</button>
-
-<div id="gameArea" class="game-area">
-<p>Select a game</p>
-</div>
-</div>
-
 </div>
 
 <script>
-// Load saved cookies or start at 0
-let cookies = localStorage.getItem("cookies") 
-  ? parseInt(localStorage.getItem("cookies")) 
-  : 0;
-
-function loadGame(game){
-  const area = document.getElementById("gameArea");
-
-  if(game === "cookie"){
-    area.innerHTML = `
-      <h2>Cookie Clicker</h2>
-      <p>Cookies: <span id="cookies">${cookies}</span></p>
-      <button onclick="addCookie()">Click 🍪</button>
-      <br><br>
-      <button onclick="resetCookies()">Reset</button>
-    `;
-  }
-}
-
-function addCookie(){
-  cookies++;
-  localStorage.setItem("cookies", cookies);
-  document.getElementById("cookies").innerText = cookies;
-}
-
-function resetCookies(){
-  cookies = 0;
-  localStorage.setItem("cookies", cookies);
-  document.getElementById("cookies").innerText = cookies;
-}
-
-// Back button function
 function goBack(){
   window.location.href = "https://eliasmorgenthal.github.io/e-oshomepage/";
 }
