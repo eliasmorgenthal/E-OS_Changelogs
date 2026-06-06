@@ -98,46 +98,91 @@ footer{
 </div>
 
 <script>
-// URL parameters
-const params = new URLSearchParams(window.location.search);
-const language = params.get("lan");
+// Get current language
+function getLanguage(){
+  return new URLSearchParams(window.location.search).get("lan");
+}
 
-// Language-aware homepage redirect
+// Back button keeps language
 function goBack(){
   let url = "https://eliasmorgenthal.github.io/e-oshomepage/";
 
-  if(language === "de"){
+  if(getLanguage() === "de"){
     url += "?lan=de";
   }
 
   window.location.href = url;
 }
 
-// German translations
-if(language === "de"){
-  document.documentElement.lang = "de";
-  document.title = "E-OS Änderungsprotokolle";
+// Apply translations
+function applyLanguage(){
+  const language = getLanguage();
 
-  document.getElementById("backBtn").textContent = "⬅ Zurück";
-  document.getElementById("subtitle").textContent = "Änderungsprotokolle";
+  // Default English
+  document.documentElement.lang = "en";
+  document.title = "E-OS Changelogs";
 
-  document.getElementById("v53_1").textContent = "Verbessertes 'Zurück'-Symbol";
-  document.getElementById("v53_2").textContent = "Fehlerbehebungen";
-  document.getElementById("v53_3").textContent = "Neue Gif-Hub-Inhalte";
+  document.getElementById("backBtn").textContent = "⬅ Back";
+  document.getElementById("subtitle").textContent = "Change Logs";
 
-  document.getElementById("v50_1").textContent = "Neue Discord-Profile";
-  document.getElementById("v50_2").textContent = "Fehlerbehebungen";
-  document.getElementById("v50_3").textContent = "Verbesserte Button-Layouts";
+  document.getElementById("v53_1").textContent = "Better 'Back' Icon";
+  document.getElementById("v53_2").textContent = "Bug Fixes";
+  document.getElementById("v53_3").textContent = "New Gif Hub Content";
 
-  document.getElementById("v42_1").textContent = "Fehlerbehebungen";
-  document.getElementById("v42_2").textContent = "Kleine UI-Verbesserungen";
+  document.getElementById("v50_1").textContent = "New Discord Profiles";
+  document.getElementById("v50_2").textContent = "Bug Fixes";
+  document.getElementById("v50_3").textContent = "Better Button Layouts";
 
-  document.getElementById("v04_1").textContent = "Neuer Startbildschirm";
-  document.getElementById("v04_2").textContent = "Verbesserte Layouts";
-  document.getElementById("v04_3").textContent = "Google integriert";
+  document.getElementById("v42_1").textContent = "Bug Fixes";
+  document.getElementById("v42_2").textContent = "Small UI Tweaks";
+
+  document.getElementById("v04_1").textContent = "New Start-up Screen";
+  document.getElementById("v04_2").textContent = "Better Layouts";
+  document.getElementById("v04_3").textContent = "Integrated Google";
 
   document.getElementById("footer").textContent =
-    "© 2026, E-OS Entwicklungsteam.";
+    "© 2026, E-OS Development Team.";
+
+  // German overrides
+  if(language === "de"){
+    document.documentElement.lang = "de";
+    document.title = "E-OS Änderungsprotokolle";
+
+    document.getElementById("backBtn").textContent = "⬅ Zurück";
+    document.getElementById("subtitle").textContent = "Änderungsprotokolle";
+
+    document.getElementById("v53_1").textContent = "Verbessertes 'Zurück'-Symbol";
+    document.getElementById("v53_2").textContent = "Fehlerbehebungen";
+    document.getElementById("v53_3").textContent = "Neue Gif-Hub-Inhalte";
+
+    document.getElementById("v50_1").textContent = "Neue Discord-Profile";
+    document.getElementById("v50_2").textContent = "Fehlerbehebungen";
+    document.getElementById("v50_3").textContent = "Verbesserte Button-Layouts";
+
+    document.getElementById("v42_1").textContent = "Fehlerbehebungen";
+    document.getElementById("v42_2").textContent = "Kleine UI-Verbesserungen";
+
+    document.getElementById("v04_1").textContent = "Neuer Startbildschirm";
+    document.getElementById("v04_2").textContent = "Verbesserte Layouts";
+    document.getElementById("v04_3").textContent = "Google integriert";
+
+    document.getElementById("footer").textContent =
+      "© 2026, E-OS Entwicklungsteam.";
+  }
+}
+
+// Initial run
+applyLanguage();
+
+// Detect browser history navigation
+window.addEventListener("popstate", applyLanguage);
+
+// Helper for future dynamic language switching
+function setLanguage(lang){
+  const url = new URL(window.location);
+  url.searchParams.set("lan", lang);
+  history.pushState({}, "", url);
+  applyLanguage();
 }
 </script>
 
