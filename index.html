@@ -98,92 +98,100 @@ footer{
 </div>
 
 <script>
-// Get current language
-function getLanguage(){
-  return new URLSearchParams(window.location.search).get("lan");
-}
+const params = new URLSearchParams(window.location.search);
+const language = params.get("lan") === "de" ? "de" : "en";
 
-// Back button keeps language
 function goBack(){
   let url = "https://eliasmorgenthal.github.io/e-oshomepage/";
-
-  if(getLanguage() === "de"){
-    url += "?lan=de";
-  }
-
+  if(language === "de") url += "?lan=de";
   window.location.href = url;
 }
 
-// Apply translations
-function applyLanguage(){
-  const language = getLanguage();
-
-  // Default English
-  document.documentElement.lang = "en";
-  document.title = "E-OS Changelogs";
-
-  document.getElementById("backBtn").textContent = "⬅ Back";
-  document.getElementById("subtitle").textContent = "Change Logs";
-
-  document.getElementById("v53_1").textContent = "Better 'Back' Icon";
-  document.getElementById("v53_2").textContent = "Bug Fixes";
-  document.getElementById("v53_3").textContent = "New Gif Hub Content";
-
-  document.getElementById("v50_1").textContent = "New Discord Profiles";
-  document.getElementById("v50_2").textContent = "Bug Fixes";
-  document.getElementById("v50_3").textContent = "Better Button Layouts";
-
-  document.getElementById("v42_1").textContent = "Bug Fixes";
-  document.getElementById("v42_2").textContent = "Small UI Tweaks";
-
-  document.getElementById("v04_1").textContent = "New Start-up Screen";
-  document.getElementById("v04_2").textContent = "Better Layouts";
-  document.getElementById("v04_3").textContent = "Integrated Google";
-
-  document.getElementById("footer").textContent =
-    "© 2026, E-OS Development Team.";
-
-  // German overrides
-  if(language === "de"){
-    document.documentElement.lang = "de";
-    document.title = "E-OS Änderungsprotokolle";
-
-    document.getElementById("backBtn").textContent = "⬅ Zurück";
-    document.getElementById("subtitle").textContent = "Änderungsprotokolle";
-
-    document.getElementById("v53_1").textContent = "Verbessertes 'Zurück'-Symbol";
-    document.getElementById("v53_2").textContent = "Fehlerbehebungen";
-    document.getElementById("v53_3").textContent = "Neue Gif-Hub-Inhalte";
-
-    document.getElementById("v50_1").textContent = "Neue Discord-Profile";
-    document.getElementById("v50_2").textContent = "Fehlerbehebungen";
-    document.getElementById("v50_3").textContent = "Verbesserte Button-Layouts";
-
-    document.getElementById("v42_1").textContent = "Fehlerbehebungen";
-    document.getElementById("v42_2").textContent = "Kleine UI-Verbesserungen";
-
-    document.getElementById("v04_1").textContent = "Neuer Startbildschirm";
-    document.getElementById("v04_2").textContent = "Verbesserte Layouts";
-    document.getElementById("v04_3").textContent = "Google integriert";
-
-    document.getElementById("footer").textContent =
-      "© 2026, E-OS Entwicklungsteam.";
+// All changelogs in ONE place (SUPER EASY TO EDIT)
+const changelogs = [
+ {
+    version: "0.0.54e",
+    en: [
+      "Secret 🤫",
+    ],
+    de: [
+      "Geheimnis 🤫",
+    ]
+  },
+  {
+    version: "0.0.53e",
+    en: [
+      "Better Back Icon",
+      "Bug Fixes",
+      "New Gif Hub Content"
+    ],
+    de: [
+      "Verbessertes Zurück-Symbol",
+      "Fehlerbehebungen",
+      "Neue Gif-Hub Inhalte"
+    ]
+  },
+  {
+    version: "0.0.5e",
+    en: [
+      "New Discord Profiles",
+      "Bug Fixes",
+      "Better Button Layouts"
+    ],
+    de: [
+      "Neue Discord-Profile",
+      "Fehlerbehebungen",
+      "Bessere Button-Layouts"
+    ]
+  },
+  {
+    version: "0.0.42e",
+    en: [
+      "Bug Fixes",
+      "Small UI Tweaks"
+    ],
+    de: [
+      "Fehlerbehebungen",
+      "Kleine UI Verbesserungen"
+    ]
+  },
+  {
+    version: "0.0.4e",
+    en: [
+      "New Startup Screen",
+      "Better Layouts",
+      "Integrated Google"
+    ],
+    de: [
+      "Neuer Startbildschirm",
+      "Bessere Layouts",
+      "Google integriert"
+    ]
   }
+];
+
+function renderChangelogs(){
+  const container = document.getElementById("changelog");
+
+  container.innerHTML = changelogs.map(entry => `
+    <div class="version-box">
+      <h2>${entry.version}</h2>
+      <ul>
+        ${(entry[language] || entry.en).map(item => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+  `).join("");
+
+  document.documentElement.lang = language;
+
+  document.getElementById("backBtn").textContent =
+    language === "de" ? "⬅ Zurück" : "⬅ Back";
+
+  document.getElementById("title").textContent =
+    language === "de" ? "Änderungsprotokolle" : "Change Logs";
 }
 
-// Initial run
-applyLanguage();
-
-// Detect browser history navigation
-window.addEventListener("popstate", applyLanguage);
-
-// Helper for future dynamic language switching
-function setLanguage(lang){
-  const url = new URL(window.location);
-  url.searchParams.set("lan", lang);
-  history.pushState({}, "", url);
-  applyLanguage();
-}
+renderChangelogs();
 </script>
 
 </body>
