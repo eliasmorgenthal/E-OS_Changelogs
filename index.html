@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>E-OS Changelogs:</title>
+<title>E-OS Changelogs</title>
 
 <style>
 body{
@@ -13,9 +13,9 @@ body{
   background:linear-gradient(135deg,#8fd3ff,#2d5bff,#5b1aa8);
   min-height:100vh;
 
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+  user-select:none;
+  -webkit-user-select:none;
+  -ms-user-select:none;
 }
 
 .wrapper{
@@ -24,9 +24,9 @@ body{
   padding:40px 20px;
 }
 
-.content{ flex:2; }
-
-h1{ font-size:40px; }
+h1{
+  font-size:40px;
+}
 
 .version-box{
   background:rgba(0,0,0,0.35);
@@ -53,56 +53,91 @@ footer{
 
 <div class="wrapper">
 
-<!-- Back button -->
-<button onclick="goBack()">⬅ Back</button>
+<button id="backBtn" onclick="goBack()">⬅ Back</button>
 
-<div class="content">
 <h1>E-OS</h1>
-<p>Change Logs</p>
+<p id="subtitle">Change Logs</p>
 
 <div class="version-box">
 <h2>0.0.53e</h2>
 <ul>
-<li>Better 'Back' Icon</li>
-<li>Bug Fixes</li>
-<li>New Gif Hub Content</li>
+<li id="v53_1">Better 'Back' Icon</li>
+<li id="v53_2">Bug Fixes</li>
+<li id="v53_3">New Gif Hub Content</li>
 </ul>
 </div>
 
 <div class="version-box">
 <h2>0.0.5e</h2>
 <ul>
-<li>New Discord Profiles</li>
-<li>Bug Fixes</li>
-<li>Better Button Layouts</li>
+<li id="v50_1">New Discord Profiles</li>
+<li id="v50_2">Bug Fixes</li>
+<li id="v50_3">Better Button Layouts</li>
 </ul>
 </div>
 
 <div class="version-box">
 <h2>0.0.42e</h2>
 <ul>
-<li>Bug Fixes</li>
-<li>Small UI Tweaks</li>
+<li id="v42_1">Bug Fixes</li>
+<li id="v42_2">Small UI Tweaks</li>
 </ul>
 </div>
 
 <div class="version-box">
 <h2>0.0.4e</h2>
 <ul>
-<li>New Start-up screen</li>
-<li>Better Layouts</li>
-<li>Integrated Google</li>
+<li id="v04_1">New Start-up Screen</li>
+<li id="v04_2">Better Layouts</li>
+<li id="v04_3">Integrated Google</li>
 </ul>
 </div>
 
-<footer>© 2026, E-OS Development Team.</footer>
-</div>
+<footer id="footer">© 2026, E-OS Development Team.</footer>
 
 </div>
 
 <script>
+// URL parameters
+const params = new URLSearchParams(window.location.search);
+const language = params.get("lan");
+
+// Language-aware homepage redirect
 function goBack(){
-  window.location.href = "https://eliasmorgenthal.github.io/e-oshomepage/";
+  let url = "https://eliasmorgenthal.github.io/e-oshomepage/";
+
+  if(language === "de"){
+    url += "?lan=de";
+  }
+
+  window.location.href = url;
+}
+
+// German translations
+if(language === "de"){
+  document.documentElement.lang = "de";
+  document.title = "E-OS Änderungsprotokolle";
+
+  document.getElementById("backBtn").textContent = "⬅ Zurück";
+  document.getElementById("subtitle").textContent = "Änderungsprotokolle";
+
+  document.getElementById("v53_1").textContent = "Verbessertes 'Zurück'-Symbol";
+  document.getElementById("v53_2").textContent = "Fehlerbehebungen";
+  document.getElementById("v53_3").textContent = "Neue Gif-Hub-Inhalte";
+
+  document.getElementById("v50_1").textContent = "Neue Discord-Profile";
+  document.getElementById("v50_2").textContent = "Fehlerbehebungen";
+  document.getElementById("v50_3").textContent = "Verbesserte Button-Layouts";
+
+  document.getElementById("v42_1").textContent = "Fehlerbehebungen";
+  document.getElementById("v42_2").textContent = "Kleine UI-Verbesserungen";
+
+  document.getElementById("v04_1").textContent = "Neuer Startbildschirm";
+  document.getElementById("v04_2").textContent = "Verbesserte Layouts";
+  document.getElementById("v04_3").textContent = "Google integriert";
+
+  document.getElementById("footer").textContent =
+    "© 2026, E-OS Entwicklungsteam.";
 }
 </script>
 
