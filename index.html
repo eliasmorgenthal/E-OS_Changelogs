@@ -60,6 +60,10 @@ h1{ font-size:40px; }
   padding:15px;
   border-radius:12px;
 }
+
+footer{
+  margin-top:20px;
+}
 </style>
 </head>
 
@@ -111,6 +115,10 @@ h1{ font-size:40px; }
 
 <div class="side-panel">
 <h3>Mini Games</h3>
+
+<!-- Back button -->
+<button onclick="goBack()">⬅ Back</button>
+
 <button onclick="loadGame('cookie')">Cookie Clicker</button>
 
 <div id="gameArea" class="game-area">
@@ -150,6 +158,11 @@ function resetCookies(){
   cookies = 0;
   localStorage.setItem("cookies", cookies);
   document.getElementById("cookies").innerText = cookies;
+}
+
+// Back button function
+function goBack(){
+  window.location.href = "https://eliasmorgenthal.github.io/e-oshomepage/";
 }
 </script>
 
