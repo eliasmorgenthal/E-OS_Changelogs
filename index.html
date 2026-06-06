@@ -43,17 +43,23 @@ button{
   margin-bottom:15px;
 }
 
-/* NEW badge */
 .badge{
-  background:#00ff88;
-  color:#000;
-  font-size:12px;
-  padding:3px 8px;
-  border-radius:6px;
-  margin-left:10px;
-  font-weight:bold;
-  vertical-align:middle;
+  background: rgba(255, 255, 255, 0.18);
+  color: #000;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 8px;
+  margin-left: 10px;
+  font-weight: bold;
+  vertical-align: middle;
+
+  /* glass effect */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
+
 </style>
 </head>
 
@@ -113,23 +119,24 @@ async function loadChangelogs(){
 
     container.innerHTML = changelogs.map((entry, index) => {
 
-      const isLatest = index === 0;
+  const isLatest = index === 0;
+  const list = Array.isArray(entry[language])
+    ? entry[language]
+    : entry.en;
 
-      return `
-        <div class="version-box">
-          <h2>
-            ${entry.version}
-            ${isLatest ? `<span class="badge">NEW</span>` : ""}
-          </h2>
+  return `
+    <div class="version-box">
+      <h2>
+        ${entry.version}
+        ${isLatest ? `<span class="badge">NEW</span>` : ""}
+      </h2>
 
-          <ul>
-            ${(entry[language] || entry.en)
-              .map(item => `<li>${item}</li>`)
-              .join("")}
-          </ul>
-        </div>
-      `;
-    }).join("");
+      <ul>
+        ${list.map(item => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}).join("");
 
     applyLanguageUI();
 
