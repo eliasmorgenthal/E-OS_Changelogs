@@ -42,10 +42,6 @@ button{
   cursor:pointer;
   margin-bottom:15px;
 }
-
-footer{
-  margin-top:20px;
-}
 </style>
 </head>
 
@@ -58,7 +54,6 @@ footer{
 <h1>E-OS</h1>
 <p id="title">Change Logs</p>
 
-<!-- IMPORTANT: this is where JSON loads -->
 <div id="changelog"></div>
 
 <footer id="footer">© 2026, E-OS Development Team.</footer>
@@ -66,38 +61,63 @@ footer{
 </div>
 
 <script>
+// Language
 const params = new URLSearchParams(window.location.search);
 const language = params.get("lan") === "de" ? "de" : "en";
 
+// Back button (keeps language)
 function goBack(){
   let url = "https://eliasmorgenthal.github.io/e-oshomepage/";
   if(language === "de") url += "?lan=de";
   window.location.href = url;
 }
 
-async function loadChangelogs(){
-
-  const res = await fetch("changelog.json");
-  const changelogs = await res.json();
-
-  const container = document.getElementById("changelog");
-
-  container.innerHTML = changelogs.map(entry => `
-    <div class="version-box">
-      <h2>${entry.version}</h2>
-      <ul>
-        ${(entry[language] || entry.en).map(item => `<li>${item}</li>`).join("")}
-      </ul>
-    </div>
-  `).join("");
+// Safe UI translation (prevents crashes)
+function applyLanguageUI(){
 
   document.documentElement.lang = language;
 
-  document.getElementById("backBtn").textContent =
-    language === "de" ? "⬅ Zurück" : "⬅ Back";
+  const title = document.getElementById("title");
+  const backBtn = document.getElementById("backBtn");
 
-  document.getElementById("title").textContent =
-    language === "de" ? "Änderungsprotokolle" : "Change Logs";
+  if(title){
+    title.textContent =
+      language === "de" ? "Änderungsprotokolle" : "Change Logs";
+  }
+
+  if(backBtn){
+    backBtn.textContent =
+      language === "de" ? "⬅ Zurück" : "⬅ Back";
+  }
+}
+
+// Load changelogs from JSON
+async function loadChangelogs(){
+
+  try{
+    const res = await fetch("changelog.json");
+    const changelogs = await res.json();
+
+    const container = document.getElementById("changelog");
+
+    container.innerHTML = changelogs.map(entry => `
+      <div class="version-box">
+        <h2>${entry.version}</h2>
+        <ul>
+          ${(entry[language] || entry.en)
+            .map(item => `<li>${item}</li>`)
+            .join("")}
+        </ul>
+      </div>
+    `).join("");
+
+    applyLanguageUI();
+
+  } catch (err){
+    document.getElementById("changelog").innerHTML =
+      "<p>Failed to load changelogs.</p>";
+    console.error(err);
+  }
 }
 
 loadChangelogs();
