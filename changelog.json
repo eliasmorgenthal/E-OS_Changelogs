@@ -1,0 +1,60 @@
+{
+    version: "0.0.54e",
+    en: [
+      "Secret 🤫",
+    ],
+    de: [
+      "Geheimnis 🤫",
+    ]
+  },
+  {
+    version: "0.0.53e",
+    en: [
+      "Better Back Icon",
+      "Bug Fixes",
+      "New Gif Hub Content"
+    ],
+    de: [
+      "Verbessertes Zurück-Symbol",
+      "Fehlerbehebungen",
+      "Neue Gif-Hub Inhalte"
+    ]
+  },
+  {
+    version: "0.0.5e",
+    en: [
+      "New Discord Profiles",
+      "Bug Fixes",
+      "Better Button Layouts"
+    ],
+    de: [
+      "Neue Discord-Profile",
+      "Fehlerbehebungen",
+      "Bessere Button-Layouts"
+    ]
+  },
+  {
+    version: "0.0.42e",
+    en: [
+      "Bug Fixes",
+      "Small UI Tweaks"
+    ],
+    de: [
+      "Fehlerbehebungen",
+      "Kleine UI Verbesserungen"
+    ]
+  },
+  {
+    version: "0.0.4e",
+    en: [
+      "New Startup Screen",
+      "Better Layouts",
+      "Integrated Google"
+    ],
+    de: [
+      "Neuer Startbildschirm",
+      "Bessere Layouts",
+      "Google integriert"
+    ]
+  }
+];
